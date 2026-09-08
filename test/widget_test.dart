@@ -1,30 +1,31 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/modul_02/academic_dashboard_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Dashboard akademik tampil dengan benar', (
+    WidgetTester tester,
+  ) async {
+    // Set ukuran layar test agar cukup lebar
+    tester.view.physicalSize = const Size(1280, 1920);
+    tester.view.devicePixelRatio = 1.0;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AcademicDashboardScreen(),
+      ),
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Tunggu proses render dan layout selesai penuh
+    await tester.pumpAndSettle();
+
+    // Verifikasi teks yang ada pada halaman
+    expect(find.text('Dashboard Akademik & Proyek'), findsOneWidget);
+    expect(find.textContaining('Afifa Nur Fitria'), findsOneWidget);
   });
 }
