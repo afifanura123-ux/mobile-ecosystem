@@ -1,28 +1,24 @@
-# Laporan Praktikum Modul 01: Mobile Ecosystem, Flutter Setup & Profile App
+# Laporan Praktikum Modul 02: Declarative UI & Responsive Layout
 
 - **Nama**: [Afifa Nur Fitria]
 - **NIM**: [362558302034]
-- **Kelas / Prodi**: 2C / Sarjana Terapan TRPL
+- **Kelas / Prodi**: 3C / Sarjana Terapan TRPL
 - **Mata Kuliah**: Pemrograman Perangkat Bergerak (Semester 3)
 
 ---
-
-## 1. Ringkasan Aktivitas
-[saya mempelajari dasar mobile ecosystem dan melakukan konfigurasi environment Flutter lalu saya membuat aplikasi profil sederhana dan menguji tampilannya pada mode portrait maupun landscape.]
+## 1. Ringkasan Implementasi
+Saya membuat Dashboard Akademik responsif pakai `LayoutBuilder`—menampilkan `ListView` 1 kolom di layar mobile dan `GridView` 2 kolom di layar lebar. Tampilannya pakai tema Material 3 (*Light/Dark Mode*), dilengkapi filter `ChoiceChip`, hitungan total SKS dinamis di header, dan detail matkul via `showModalBottomSheet`.
 
 ## 2. Bukti Tangkapan Layar (Running App)
-| Mode Portrait | Mode Landscape |
-|---|---|
-| ![Landsacape](<img width="1366" height="768" alt="Screenshot (494)" src="https://github.com/user-attachments/assets/13a13696-ed9d-4cfd-a5aa-869144425ccc" />
-) | ![Potrait](<img width="505" height="699" alt="WhatsApp Image 2026-09-01 at 17 35 17" src="https://github.com/user-attachments/assets/7f1a45ef-da1c-488a-9c60-a550f66d5919" />
-)
-) |
+| Mode Portrait (Light) | Mode Dark Theme | Mode Landscape / Tablet (2 Kolom) |
+|---|---|---|
+| ![Portrait](./flutter_01.png) | ![Dark](./flutter_01.png) | ![Wide](./flutter_01.png) |
 
-## 3. Kendala yang Dihadapi & Solusinya
-- **Kendala**: [Mengalami masalah pada konfigurasi Flutter SDK dan Android SDK saat proses instalasi awal.]
-- **Solusi**: [Memperbaiki path environment variable serta menginstal ulang dependensi SDK yang kurang melalui SDK Manager.)]
+## 3. Kendala Layout yang Dihadapi & Solusinya
+- **Kendala**: Terjadi *overflow/unbounded height* saat memasukkan `ListView`/`GridView` ke dalam `SingleChildScrollView`.
+- **Solusi**: Menambahkan `shrinkWrap: true` dan `physics: const NeverScrollableScrollPhysics()` pada `ListView`/`GridView`.
 
 ## 4. Jawaban Pertanyaan Refleksi
-1. **Pilihan Native vs Flutter**: [Native butuh dua codebase beda untuk Android & iOS, sedangkan Flutter pakai satu codebase untuk kedua platform sehingga lebih cepat dan efisien.]
-2. **Prinsip UI = f(state)**: [Tampilan antarmuka (UI) selalu menyesuaikan dengan kondisi data (state). Jika state berubah, UI otomatis terbarui.]
-3. **Pentingnya Conventional Commits**: [Membuat riwayat commit Git jadi rapi, jelas, dan mudah dipahami saat bekerja dalam tim.]
+1. **Efisiensi Single-pass BoxConstraints**: Flutter cuma butuh satu kali alur kalkulasi ukuran dari parent ke child, jadi proses render layout sangat cepat tanpa perlu hitung ulang berulang kali.
+2. **Kriteria Modularisasi Widget**: Dipisah jadi widget tersendiri kalau kodenya mulai panjang, kompleks, atau bakal dipakai berulang kali biar kodenya tetap rapi dan gampang di-maintain.
+3. **Manfaat M3 ThemeData Terpusat**: Bikin gaya warna dan font seragam di seluruh aplikasi, serta mempermudah switch *Light/Dark Mode* secara otomatis tanpa ubah kode per widget.
